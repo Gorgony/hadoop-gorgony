@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.io.FileUtils;
@@ -23,7 +25,6 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 public class BevriendeGetallen {
 
     public static void main(String[] args) throws Exception {
-        FileUtils.deleteDirectory(new File("output/"));
         Job job = new Job();
         job.setJarByClass(CombinationCount.class);
 
@@ -36,11 +37,13 @@ public class BevriendeGetallen {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
-        Date voor = new Date();
-        job.waitForCompletion(true);
-        Date na = new Date();
-        String time = (na.getTime() - voor.getTime()) + " ms";
-        FileUtils.writeStringToFile(new File("tijd.txt"), time);
+        Date start = new Date();
+        if (job.waitForCompletion(true)) {
+            Date end = new Date();
+            long elapsed = end.getTime() - start.getTime();
+            Logger l = Logger.getLogger(BevriendeGetallen.class.getName());
+            l.log(Level.INFO, "Total time for mapreduce job -> " + elapsed);
+        }
     }
 }
 
