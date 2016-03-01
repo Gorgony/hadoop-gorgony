@@ -23,6 +23,7 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 public class BevriendeGetallen {
 
     public static void main(String[] args) throws Exception {
+        FileUtils.deleteDirectory(new File("output/"));
         Job job = new Job();
         job.setJarByClass(CombinationCount.class);
 
@@ -80,8 +81,8 @@ class BevriendeGetallenReducer extends Reducer<Text, IntWritable, Text, IntWrita
         for (IntWritable i : values) {
             amount ++;
         }
-        String[] getallen = key.toString().split(" ");
-        if(amount == 2){
+        if(amount > 1){
+            String[] getallen = key.toString().split(" ");
             context.write(new Text(getallen[0]), new IntWritable(Integer.parseInt(getallen[1])));
         }
     }
