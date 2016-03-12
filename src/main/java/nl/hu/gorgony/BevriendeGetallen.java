@@ -6,13 +6,10 @@ package nl.hu.gorgony;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.*;
@@ -25,6 +22,7 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 public class BevriendeGetallen {
 
     public static void main(String[] args) throws Exception {
+        FileUtils.deleteDirectory(new File("output/"));
         Job job = new Job();
         job.setJarByClass(CombinationCount.class);
 

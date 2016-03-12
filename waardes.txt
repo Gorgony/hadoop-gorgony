@@ -1,0 +1,37 @@
+1   7609
+2   14447
+3   22996
+4   32930
+5   43846
+6   51489
+7   64625
+8   73747
+9   86553
+10 100637
+11 121669 116589
+12 125594 128825
+13 147380
+14 169678
+15 176060
+16 191039
+17 222864 209654
+18 220990
+19 227906 239859
+20 239865 257472
+
+Mark
+10mil zonder 140
+10mil met    70
+20mil zonder 412
+20mil met    191
+
+        ArrayList<Integer> getallen;
+        for(int j = 0; j < 10; j++){
+            getallen = new ArrayList<Integer>();
+            for(int i = 0; i < 1000000; i++){
+                getallen.add(i + (j * 1000000) + 10000000);
+            }
+            Collections.shuffle(getallen);
+            String getallenString = getallen.toString().replace("[","").replace("]","").replace(",","");
+            FileUtils.writeStringToFile(new File("/home/gorgony/hadoop/pc/b" + j), getallenString);
+        }
